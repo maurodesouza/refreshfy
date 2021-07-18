@@ -22,3 +22,12 @@ export const checkRefreshTokenIsValid = (
 
   return storedRefreshTokens.includes(refreshToken);
 };
+
+export const invalidateRefreshToken = (email: string, refreshToken: string) => {
+  const storedRefreshTokens = tokens.get(email) ?? [];
+
+  tokens.set(
+    email,
+    storedRefreshTokens.filter(token => token !== refreshToken)
+  );
+};
