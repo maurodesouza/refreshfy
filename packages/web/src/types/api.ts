@@ -5,6 +5,13 @@ export type SessionsResponseData = {
   refreshToken: string;
 };
 
+export type MeResponseData = Pick<
+  SessionsResponseData,
+  'permissions' | 'roles'
+> & {
+  email: string;
+};
+
 export type RefreshTokenResponseData = Pick<
   SessionsResponseData,
   'refreshToken' | 'token'
