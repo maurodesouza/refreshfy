@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { addUserInfoToRequest } from '../middlewares';
+import { checkAuthMiddleware, addUserInfoToRequest } from '../middlewares';
 
 import {
   checkRefreshTokenIsValid,
@@ -84,6 +84,24 @@ routes.post('/refresh', addUserInfoToRequest, (request, response) => {
     refreshToken: newRefreshToken,
     permissions,
     roles,
+  });
+});
+
+routes.get('/me', checkAuthMiddleware, (request, response) => {
+  const email = request.user;
+
+  const user = users.get(email);
+
+  if (!user) {
+    return response
+      .status(400)
+      .json({ error: true, message: 'User not found.' });
+  }
+
+  return response.json({
+    email,
+    permissions: user.permissions,
+    roles: user.roles,
   });
 });
 
