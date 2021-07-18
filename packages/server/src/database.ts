@@ -13,3 +13,12 @@ export const createRefreshToken = (email: string) => {
 
   return refreshToken;
 };
+
+export const checkRefreshTokenIsValid = (
+  email: string,
+  refreshToken: string
+) => {
+  const storedRefreshTokens = tokens.get(email) ?? [];
+
+  return storedRefreshTokens.includes(refreshToken);
+};
