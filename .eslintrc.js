@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-const config = require('@socket-chat/eslint');
+const config = require('@refreshfy/eslint');
 
 module.exports = config;
