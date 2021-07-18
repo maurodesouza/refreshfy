@@ -1,3 +1,8 @@
+export type CreateSessionDTO = {
+  email: string;
+  password: string;
+};
+
 type UserData = {
   password: string;
   permissions: string[];
