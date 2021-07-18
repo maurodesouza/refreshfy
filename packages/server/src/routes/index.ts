@@ -105,4 +105,8 @@ routes.get('/me', checkAuthMiddleware, (request, response) => {
   });
 });
 
+routes.get('/metrics', checkAuthMiddleware, (request, response) => {
+  return response.json({ ok: true });
+});
+
 export { routes };
