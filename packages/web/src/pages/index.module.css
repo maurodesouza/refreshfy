@@ -1,0 +1,35 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.form {
+  width: 100%;
+  max-width: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.form > * {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.input {
+  border: 0;
+  padding: 0 15px;
+  height: 45px;
+  background-color: rgb(238, 238, 238);
+  border-radius: 8px;
+}
+
+.button {
+  border-radius: 8px;
+  border: 0;
+  height: 40px;
+  background-color: rgb(255, 145, 0);
+}
