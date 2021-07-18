@@ -5,6 +5,14 @@ export const users: UsersStore = new Map();
 
 export const tokens: RefreshTokensStore = new Map();
 
+export const seedUserStore = () => {
+  users.set('user@user.com', {
+    password: '123',
+    permissions: ['users.list', 'users.create', 'metrics.list'],
+    roles: ['administrator'],
+  });
+};
+
 export const createRefreshToken = (email: string) => {
   const currentUserTokens = tokens.get(email) ?? [];
   const refreshToken = uuid();
