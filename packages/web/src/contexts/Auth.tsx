@@ -2,6 +2,7 @@ import { createContext, useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import { parseCookies, setCookie, destroyCookie } from 'nookies';
+import { useToast } from '@chakra-ui/react';
 
 import { SessionsResponseData, MeResponseData } from 'types/api';
 import { api } from 'services/api';
@@ -33,6 +34,7 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   const [user, setUser] = useState<User>();
   const isAuthenticated = !!user;
 
+  const toast = useToast();
   const router = useRouter();
 
   const signIn = useCallback(
@@ -63,10 +65,15 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
 
         router.push('/dashboard');
       } catch (err) {
-        // Do nothing!
+        const title = err.response?.data?.message || 'Ocorreu um erro';
+
+        toast.closeAll();
+        toast({ title, status: 'error' });
+
+        throw new Error(err);
       }
     },
-    [router]
+    [toast, router]
   );
 
   const getUserData = useCallback(async () => {
