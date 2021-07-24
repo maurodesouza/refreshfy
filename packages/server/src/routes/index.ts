@@ -21,7 +21,8 @@ routes.post('/sessions', (request, response) => {
   if (!user || password !== user.password) {
     return response.status(401).json({
       error: true,
-      message: 'E-mail or password incorrect.',
+      code: 'session.create',
+      message: 'Email ou senha estão incorretos!',
     });
   }
 
