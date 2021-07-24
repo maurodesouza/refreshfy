@@ -1,5 +1,5 @@
 import { createContext, useCallback, useEffect, useState } from 'react';
-import Router from 'next/router';
+import { useRouter } from 'next/router';
 
 import { parseCookies, setCookie, destroyCookie } from 'nookies';
 
@@ -33,36 +33,41 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   const [user, setUser] = useState<User>();
   const isAuthenticated = !!user;
 
-  const signIn = useCallback(async ({ email, password }: SignInCredentials) => {
-    try {
-      const { data } = await api.post<SessionsResponseData>('sessions', {
-        email,
-        password,
-      });
+  const router = useRouter();
 
-      const { roles, permissions, token, refreshToken } = data;
+  const signIn = useCallback(
+    async ({ email, password }: SignInCredentials) => {
+      try {
+        const { data } = await api.post<SessionsResponseData>('sessions', {
+          email,
+          password,
+        });
 
-      setUser({
-        email,
-        roles,
-        permissions,
-      });
+        const { roles, permissions, token, refreshToken } = data;
 
-      const config = {
-        maxAge: 60 * 60 * 24 * 30, // 30 days
-        path: '/',
-      };
+        setUser({
+          email,
+          roles,
+          permissions,
+        });
 
-      setCookie(undefined, '@refreshfy:token', token, config);
-      setCookie(undefined, '@refreshfy:refreshToken', refreshToken, config);
+        const config = {
+          maxAge: 60 * 60 * 24 * 30, // 30 days
+          path: '/',
+        };
 
-      api.defaults.headers['authorization'] = `Bearer ${token}`;
+        setCookie(undefined, '@refreshfy:token', token, config);
+        setCookie(undefined, '@refreshfy:refreshToken', refreshToken, config);
 
-      Router.push('/dashboard');
-    } catch (err) {
-      // Do nothing!
-    }
-  }, []);
+        api.defaults.headers['authorization'] = `Bearer ${token}`;
+
+        router.push('/dashboard');
+      } catch (err) {
+        // Do nothing!
+      }
+    },
+    [router]
+  );
 
   const getUserData = useCallback(async () => {
     try {
@@ -77,9 +82,9 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
       destroyCookie(undefined, '@refreshfy:token');
       destroyCookie(undefined, '@refreshfy:refreshToken');
 
-      Router.push('/');
+      router.push('/');
     }
-  }, []);
+  }, [router]);
 
   useEffect(() => {
     const { '@refreshfy:token': token } = parseCookies();
