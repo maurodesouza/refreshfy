@@ -31,6 +31,10 @@ export const setupApiClient = (
     r => r,
     (error: AxiosError) => {
       if (error.response.status === 401) {
+        if (error.response.data?.code === 'session.create') {
+          return Promise.reject(error);
+        }
+
         if (error.response.data?.code === 'token.expired') {
           const { '@refreshfy:refreshToken': refreshToken } =
             parseCookies(context);
