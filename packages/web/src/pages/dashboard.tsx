@@ -1,19 +1,16 @@
 import { useEffect } from 'react';
+import { useToast } from '@chakra-ui/react';
 
 import { asLogged } from 'auth/asLogged';
 import { useAuth } from 'hooks';
 
-import { api } from 'services/api';
-
 const Dashboard = () => {
   const { user } = useAuth();
+  const toast = useToast();
 
   useEffect(() => {
-    api
-      .get('metrics')
-      .then(r => console.log('Dashboard', r.data))
-      .catch(err => console.error('Dashboard error', err));
-  }, []);
+    toast.closeAll();
+  }, [toast]);
 
   return <h1>Dashboard: {user?.email}</h1>;
 };
