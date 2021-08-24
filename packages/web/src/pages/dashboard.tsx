@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import { asLogged } from 'auth/asLogged';
-import { useAuth } from 'hooks/useAuth';
+import { useAuth } from 'hooks';
 
 import { api } from 'services/api';
 

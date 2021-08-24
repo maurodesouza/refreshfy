@@ -10,7 +10,7 @@ import { MdEmail as EmailIcon, MdLock as LockIcon } from 'react-icons/md';
 
 import { Input, Logo } from 'components';
 
-import { useAuth } from 'hooks/useAuth';
+import { useAuth } from 'hooks';
 import { asGuest } from 'auth/asGuest';
 
 import { getValidationErrors } from 'utils/getValidationErrors';
