@@ -21,6 +21,7 @@ type SignInCredentials = {
 type AuthContextData = {
   user: User;
   signIn: (credentials: SignInCredentials) => Promise<void>;
+  signOut: () => void;
   isAuthenticated: boolean;
 };
 
@@ -76,6 +77,13 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     [toast, router]
   );
 
+  const signOut = useCallback(() => {
+    destroyCookie(undefined, '@refreshfy:token');
+    destroyCookie(undefined, '@refreshfy:refreshToken');
+
+    router.push('/');
+  }, [router]);
+
   const getUserData = useCallback(async () => {
     try {
       const { data } = await api.get<MeResponseData>('me');
@@ -99,8 +107,14 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     if (token) getUserData();
   }, [getUserData]);
 
+  useEffect(() => {
+    const { logout } = router.query;
+
+    if (logout === 'true') signOut();
+  }, [signOut, router.asPath, router.query]);
+
   return (
-    <AuthContext.Provider value={{ isAuthenticated, signIn, user }}>
+    <AuthContext.Provider value={{ isAuthenticated, signIn, signOut, user }}>
       {children}
     </AuthContext.Provider>
   );
