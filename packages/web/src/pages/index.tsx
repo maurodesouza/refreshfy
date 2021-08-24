@@ -56,7 +56,7 @@ const Home = () => {
   );
 
   return (
-    <C.Flex w="100%" h="100vh" align="center" justify="center">
+    <C.Flex w="100%" h="100%" align="center" justify="center" mx="auto">
       <C.Box w="100%" maxW="360px">
         <Form ref={formRef} onSubmit={handleOnSubmit}>
           <C.Flex
@@ -95,8 +95,8 @@ const Home = () => {
         </Form>
 
         <C.Alert status="info" borderRadius="lg" flexDir={['column', 'row']}>
-          <C.AlertIcon />
-          <C.Box alignItems="center">
+          <C.AlertIcon me={['0', '3']} />
+          <C.Box alignItems="center" textAlign="center">
             Use&nbsp;<C.Text as="strong">user@user.com</C.Text>
             &nbsp;e senha&nbsp;
             <C.Text as="strong">123</C.Text>
