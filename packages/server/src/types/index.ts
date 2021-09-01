@@ -1,3 +1,5 @@
+import * as database from '../database';
+
 export enum Roles {
   ADMIN,
   SUPPORT,
@@ -19,6 +21,13 @@ type UserData = {
 export type UsersStore = Map<string, UserData>;
 
 export type RefreshTokensStore = Map<string, string[]>;
+
+type DatabaseStores = keyof typeof database;
+
+export type Database<Store extends DatabaseStores> = Record<
+  DatabaseStores,
+  typeof database[Store]
+>;
 
 export type DecodedToken = {
   sub: string;

@@ -3,10 +3,7 @@ import { Router } from 'express';
 import { checkAuthMiddleware, addUserInfoToRequest } from '../middlewares';
 
 import {
-  checkRefreshTokenIsValid,
-  users,
-  invalidateRefreshToken,
-} from '../database';
+import { users } from '../database';
 
 import { CreateSessionDTO } from '../types';
 import { generateJwtAndRefreshToken } from '../auth';
