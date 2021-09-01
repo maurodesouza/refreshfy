@@ -3,6 +3,7 @@ import { Router } from 'express';
 import {
   isAuthenticatedMiddleware,
 } from '../middlewares';
+import * as refreshTokenSevices from '../services/refreshToken';
 
 import { users } from '../database';
 
@@ -60,7 +61,7 @@ routes.post('/refresh', (request, response) => {
       .json({ error: true, message: 'Refresh token is required.' });
   }
 
-  const isValidRefreshToken = checkRefreshTokenIsValid(email, refreshToken);
+  const isValidRefreshToken = refreshTokenSevices.IsValid(email, refreshToken);
 
   if (!isValidRefreshToken) {
     return response
@@ -68,7 +69,7 @@ routes.post('/refresh', (request, response) => {
       .json({ error: true, message: 'Refresh token is invalid.' });
   }
 
-  invalidateRefreshToken(email, refreshToken);
+  refreshTokenSevices.invalidate(email, refreshToken);
 
   const { permissions, roles } = user;
 

@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 
 import { auth } from './config';
-import { createRefreshToken } from './database';
+import * as refreshTokenSevices from './services/refreshToken';
 
 export function generateJwtAndRefreshToken(
   email: string,
@@ -12,7 +12,7 @@ export function generateJwtAndRefreshToken(
     expiresIn: 10,
   });
 
-  const refreshToken = createRefreshToken(email);
+  const refreshToken = refreshTokenSevices.create(email);
 
   return {
     token,
