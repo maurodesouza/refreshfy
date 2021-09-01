@@ -1,3 +1,10 @@
+export enum Roles {
+  ADMIN,
+  SUPPORT,
+  EDITOR,
+  MARKETING,
+}
+
 export type CreateSessionDTO = {
   email: string;
   password: string;
@@ -6,7 +13,7 @@ export type CreateSessionDTO = {
 type UserData = {
   password: string;
   permissions: string[];
-  roles: string[];
+  roles: Roles[];
 };
 
 export type UsersStore = Map<string, UserData>;
