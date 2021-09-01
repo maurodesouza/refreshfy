@@ -1,2 +1,1 @@
-export * from './checkAuth';
-export * from './addUserInfoToRequest';
+export * from './isAuthenticated';

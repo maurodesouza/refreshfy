@@ -1,8 +1,9 @@
 import { Router } from 'express';
 
-import { checkAuthMiddleware, addUserInfoToRequest } from '../middlewares';
-
 import {
+  isAuthenticatedMiddleware,
+} from '../middlewares';
+
 import { users } from '../database';
 
 import { CreateSessionDTO } from '../types';
@@ -38,8 +39,10 @@ routes.post('/sessions', (request, response) => {
   });
 });
 
-routes.post('/refresh', addUserInfoToRequest, (request, response) => {
-  const email = request.user;
+routes.use(isAuthenticatedMiddleware);
+
+routes.post('/refresh', (request, response) => {
+  const { email } = request.user;
   const { refreshToken } = request.body;
 
   const user = users.get(email);
@@ -85,8 +88,8 @@ routes.post('/refresh', addUserInfoToRequest, (request, response) => {
   });
 });
 
-routes.get('/me', checkAuthMiddleware, (request, response) => {
-  const email = request.user;
+routes.get('/me', (request, response) => {
+  const { email } = request.user;
 
   const user = users.get(email);
 
