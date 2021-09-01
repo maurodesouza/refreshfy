@@ -18,7 +18,13 @@ type UserData = {
   roles: Roles[];
 };
 
+type PostData = {
+  title: string;
+};
+
 export type UsersStore = Map<string, UserData>;
+
+export type PostsStore = Map<string, PostData>;
 
 export type RefreshTokensStore = Map<string, string[]>;
 
