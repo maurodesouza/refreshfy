@@ -2,13 +2,15 @@ import { Router } from 'express';
 
 import {
   isAuthenticatedMiddleware,
+  hasPermissionMiddleware,
 } from '../middlewares';
 import * as refreshTokenSevices from '../services/refreshToken';
 
-import { users } from '../database';
+import { users, posts } from '../database';
 
-import { CreateSessionDTO } from '../types';
+import { CreateSessionDTO, Roles } from '../types';
 import { generateJwtAndRefreshToken } from '../auth';
+import { formatObjectMap } from '../utils/formtatObjectMap';
 
 const routes = Router();
 
@@ -107,8 +109,12 @@ routes.get('/me', (request, response) => {
   });
 });
 
-routes.get('/metrics', checkAuthMiddleware, (request, response) => {
-  return response.json({ ok: true });
-});
+routes.get(
+  '/posts',
+  hasPermissionMiddleware([Roles.ADMIN, Roles.EDITOR]),
+  (request, response) => {
+    return response.json(formatObjectMap(posts, 'id'));
+  }
+);
 
 export { routes };
