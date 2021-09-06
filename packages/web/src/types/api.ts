@@ -18,3 +18,13 @@ export type RefreshTokenResponseData = Pick<
   SessionsResponseData,
   'refreshToken' | 'token'
 >;
+
+export type PostData = {
+  title: string;
+  id: string;
+};
+
+export type PostResponseData = {
+  items: PostData[];
+  total_pages: number;
+};
