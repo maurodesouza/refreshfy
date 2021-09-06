@@ -92,6 +92,8 @@ routes.post('/refresh', (request, response) => {
   });
 });
 
+routes.use(isAuthenticatedMiddleware);
+
 routes.get('/me', (request, response) => {
   const { email } = request.user;
 
