@@ -9,6 +9,7 @@ import {
 } from 'react-icons/fi';
 
 import { NavItem } from 'components';
+import { Roles } from 'types';
 
 const links = {
   dahsboard: {
@@ -27,18 +28,21 @@ const links = {
     to: '/messages',
     icon: FiMessageCircle,
     label: 'Mensagens',
+    roles: [Roles.ADMIN, Roles.MARKETING, Roles.SUPPORT],
   },
 
   posts: {
     to: '/posts',
     icon: FiFileText,
     label: 'Publicações',
+    roles: [Roles.ADMIN, Roles.EDITOR],
   },
 
   sales: {
     to: '/sales',
     icon: FiShoppingCart,
     label: 'Vendas',
+    roles: [Roles.ADMIN, Roles.MARKETING],
   },
 
   profile: {
@@ -51,6 +55,7 @@ const links = {
     to: '?logout=true',
     icon: FiLogOut,
     label: 'Sair',
+    hoverColor: 'red.300',
   },
 };
 
