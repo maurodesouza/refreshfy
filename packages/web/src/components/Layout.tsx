@@ -14,7 +14,7 @@ const Layout = ({ children }: LayoutProps) => {
   return isLoginPage ? (
     <>{children}</>
   ) : (
-    <C.Center pt={[5, '70px']}>
+    <C.Center py={[5, '70px']}>
       <C.Box w="100%" maxW="600px" h="100%">
         <C.Box mb="4" p="4" borderRadius="8" boxShadow="xs">
           <Menu />
