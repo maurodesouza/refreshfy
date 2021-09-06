@@ -116,7 +116,19 @@ routes.get(
   '/posts',
   hasPermissionMiddleware([Roles.ADMIN, Roles.EDITOR]),
   (request, response) => {
-    return response.json(formatObjectMap(posts, 'id'));
+    const { page = 1, per_page = 15 } = request.query;
+
+    const formatedPosts = formatObjectMap(posts, 'id');
+
+    const result = formatedPosts.slice(
+      (Number(page) - 1) * Number(per_page),
+      Number(page) * Number(per_page)
+    );
+
+    return response.json({
+      items: result,
+      total_pages: Math.ceil(formatedPosts.length / Number(per_page)),
+    });
   }
 );
 
