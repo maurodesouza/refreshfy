@@ -1,6 +1,8 @@
+import { Roles } from 'types';
+
 export type SessionsResponseData = {
   permissions: string[];
-  roles: string[];
+  roles: Roles[];
   token: string;
   refreshToken: string;
 };

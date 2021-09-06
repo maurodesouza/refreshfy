@@ -4,12 +4,12 @@ import { useRouter } from 'next/router';
 import { parseCookies, setCookie, destroyCookie } from 'nookies';
 import { useToast } from '@chakra-ui/react';
 
-import { SessionsResponseData, MeResponseData } from 'types/api';
+import { SessionsResponseData, MeResponseData, Roles } from 'types';
 import { api } from 'services/api';
 
 type User = {
   email: string;
-  roles: string[];
+  roles: Roles[];
   permissions: string[];
 };
 
