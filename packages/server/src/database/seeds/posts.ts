@@ -7,8 +7,10 @@ const posts = (database: Database<'posts'>) => {
   const toGenerate = 45;
 
   for (let i = 0; i < toGenerate; i++) {
+    const text = faker.lorem.words(7);
+
     database['posts'].set(uuid(), {
-      title: faker.lorem.words(7),
+      title: text.charAt(0).toLocaleUpperCase() + text.slice(1),
     });
   }
 };
