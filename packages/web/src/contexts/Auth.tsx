@@ -1,4 +1,4 @@
-import { createContext, useCallback, useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import { parseCookies, setCookie, destroyCookie } from 'nookies';
@@ -38,53 +38,50 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   const toast = useToast();
   const router = useRouter();
 
-  const signIn = useCallback(
-    async ({ email, password }: SignInCredentials) => {
-      try {
-        const { data } = await api.post<SessionsResponseData>('sessions', {
-          email,
-          password,
-        });
+  const signIn = async ({ email, password }: SignInCredentials) => {
+    try {
+      const { data } = await api.post<SessionsResponseData>('sessions', {
+        email,
+        password,
+      });
 
-        const { roles, permissions, token, refreshToken } = data;
+      const { roles, permissions, token, refreshToken } = data;
 
-        setUser({
-          email,
-          roles,
-          permissions,
-        });
+      setUser({
+        email,
+        roles,
+        permissions,
+      });
 
-        const config = {
-          maxAge: 60 * 60 * 24 * 30, // 30 days
-          path: '/',
-        };
+      const config = {
+        maxAge: 60 * 60 * 24 * 30, // 30 days
+        path: '/',
+      };
 
-        setCookie(undefined, '@refreshfy:token', token, config);
-        setCookie(undefined, '@refreshfy:refreshToken', refreshToken, config);
+      setCookie(undefined, '@refreshfy:token', token, config);
+      setCookie(undefined, '@refreshfy:refreshToken', refreshToken, config);
 
-        api.defaults.headers['authorization'] = `Bearer ${token}`;
+      api.defaults.headers['authorization'] = `Bearer ${token}`;
 
-        router.push('/dashboard');
-      } catch (err) {
-        const title = err.response?.data?.message || 'Ocorreu um erro';
+      router.push('/dashboard');
+    } catch (err) {
+      const title = err.response?.data?.message || 'Ocorreu um erro';
 
-        toast.closeAll();
-        toast({ title, status: 'error' });
+      toast.closeAll();
+      toast({ title, status: 'error' });
 
-        throw new Error(err);
-      }
-    },
-    [toast, router]
-  );
+      throw new Error(err);
+    }
+  };
 
-  const signOut = useCallback(() => {
+  const signOut = () => {
     destroyCookie(undefined, '@refreshfy:token');
     destroyCookie(undefined, '@refreshfy:refreshToken');
 
     router.push('/');
-  }, [router]);
+  };
 
-  const getUserData = useCallback(async () => {
+  const getUserData = async () => {
     try {
       const { data } = await api.get<MeResponseData>('me');
 
@@ -99,19 +96,19 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
 
       router.push('/');
     }
-  }, [router]);
+  };
 
   useEffect(() => {
     const { '@refreshfy:token': token } = parseCookies();
 
     if (token) getUserData();
-  }, [getUserData]);
+  }, []);
 
   useEffect(() => {
     const { logout } = router.query;
 
     if (logout === 'true') signOut();
-  }, [signOut, router.asPath, router.query]);
+  }, [router.query]);
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, signIn, signOut, user }}>
