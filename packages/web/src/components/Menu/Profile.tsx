@@ -1,4 +1,6 @@
 import * as C from '@chakra-ui/react';
+import { ClientSideOnly } from 'components';
+
 import { Popover } from './Popover';
 
 const Profile = () => {
@@ -13,7 +15,9 @@ const Profile = () => {
         </C.Text>
       </C.Flex>
 
-      <Popover />
+      <ClientSideOnly>
+        <Popover />
+      </ClientSideOnly>
     </C.Flex>
   );
 };
