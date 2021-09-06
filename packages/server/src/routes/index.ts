@@ -3,6 +3,7 @@ import { Router } from 'express';
 import {
   isAuthenticatedMiddleware,
   hasPermissionMiddleware,
+  addUserInformationToRequestMiddleware,
 } from '../middlewares';
 import * as refreshTokenSevices from '../services/refreshToken';
 
@@ -42,7 +43,7 @@ routes.post('/sessions', (request, response) => {
   });
 });
 
-routes.use(isAuthenticatedMiddleware);
+routes.use(addUserInformationToRequestMiddleware);
 
 routes.post('/refresh', (request, response) => {
   const { email } = request.user;
