@@ -22,9 +22,15 @@ type PostData = {
   title: string;
 };
 
+type MessageData = {
+  message: string;
+};
+
 export type UsersStore = Map<string, UserData>;
 
 export type PostsStore = Map<string, PostData>;
+
+export type MessagesStore = Map<string, MessageData>;
 
 export type RefreshTokensStore = Map<string, string[]>;
 
