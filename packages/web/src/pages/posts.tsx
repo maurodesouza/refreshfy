@@ -4,9 +4,8 @@ import * as C from '@chakra-ui/react';
 import { Pagination } from 'components';
 import { asLogged } from 'auth/asLogged';
 
-import { PostResponseData, PostData } from 'types/api';
+import { PostResponseData, PostData, Roles } from 'types';
 import { api } from 'services/api';
-import { Roles } from 'types';
 
 const Posts = () => {
   const [posts, setPosts] = useState<PostData[]>([]);
