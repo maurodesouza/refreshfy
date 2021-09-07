@@ -26,9 +26,17 @@ type MessageData = {
   message: string;
 };
 
+type SaleData = {
+  product: string;
+  price: number;
+  client: string;
+};
+
 export type UsersStore = Map<string, UserData>;
 
 export type PostsStore = Map<string, PostData>;
+
+export type SalesStore = Map<string, SaleData>;
 
 export type MessagesStore = Map<string, MessageData>;
 

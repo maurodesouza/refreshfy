@@ -7,7 +7,7 @@ import {
 } from '../middlewares';
 import * as refreshTokenSevices from '../services/refreshToken';
 
-import { users, posts, messages } from '../database';
+import { users, posts, messages, sales } from '../database';
 
 import { CreateSessionDTO, Roles } from '../types';
 import { generateJwtAndRefreshToken } from '../auth';
@@ -148,6 +148,26 @@ routes.get(
     return response.json({
       items: result,
       total_pages: Math.ceil(formatedMessages.length / Number(per_page)),
+    });
+  }
+);
+
+routes.get(
+  '/sales',
+  hasPermissionMiddleware([Roles.ADMIN]),
+  (request, response) => {
+    const { page = 1, per_page = 15 } = request.query;
+
+    const formatedSales = formatObjectMap(sales, 'id');
+
+    const result = formatedSales.slice(
+      (Number(page) - 1) * Number(per_page),
+      Number(page) * Number(per_page)
+    );
+
+    return response.json({
+      items: result,
+      total_pages: Math.ceil(formatedSales.length / Number(per_page)),
     });
   }
 );
