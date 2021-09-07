@@ -1,4 +1,4 @@
-import { Roles } from 'types';
+import { Roles, Products } from 'types';
 
 export type SessionsResponseData = {
   permissions: string[];
@@ -29,9 +29,11 @@ export type MessageData = {
   id: string;
 };
 
-export type PostResponseData = {
-  items: PostData[];
-  total_pages: number;
+export type SaleData = {
+  product: Products;
+  client: string;
+  price: number;
+  id: string;
 };
 
 export type GetResponseData<T extends Record<string, unknown>> = {
