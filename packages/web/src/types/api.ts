@@ -24,7 +24,17 @@ export type PostData = {
   id: string;
 };
 
+export type MessageData = {
+  message: string;
+  id: string;
+};
+
 export type PostResponseData = {
   items: PostData[];
+  total_pages: number;
+};
+
+export type MessageResponseData = {
+  items: MessageData[];
   total_pages: number;
 };
