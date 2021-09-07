@@ -4,7 +4,7 @@ import * as C from '@chakra-ui/react';
 import { Pagination } from 'components';
 import { asLogged } from 'auth/asLogged';
 
-import { PostResponseData, PostData, Roles } from 'types';
+import { GetResponseData, PostData, Roles } from 'types';
 import { api } from 'services/api';
 
 const Posts = () => {
@@ -14,7 +14,7 @@ const Posts = () => {
   const [totalPages, setTotalPages] = useState(1);
 
   const loadPosts = async () => {
-    const { data } = await api.get<PostResponseData>('posts', {
+    const { data } = await api.get<GetResponseData<PostData>>('posts', {
       params: { per_page: 10, page },
     });
 

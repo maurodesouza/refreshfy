@@ -34,7 +34,7 @@ export type PostResponseData = {
   total_pages: number;
 };
 
-export type MessageResponseData = {
-  items: MessageData[];
+export type GetResponseData<T extends Record<string, unknown>> = {
+  items: T[];
   total_pages: number;
 };

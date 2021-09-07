@@ -4,7 +4,7 @@ import * as C from '@chakra-ui/react';
 import { Pagination } from 'components';
 import { asLogged } from 'auth/asLogged';
 
-import { Roles, MessageData, MessageResponseData } from 'types';
+import { Roles, MessageData, GetResponseData } from 'types';
 import { api } from 'services/api';
 
 const Messages = () => {
@@ -14,7 +14,7 @@ const Messages = () => {
   const [totalPages, setTotalPages] = useState(1);
 
   const loadMessages = async () => {
-    const { data } = await api.get<MessageResponseData>('messages', {
+    const { data } = await api.get<GetResponseData<MessageData>>('messages', {
       params: { per_page: 10, page },
     });
 
